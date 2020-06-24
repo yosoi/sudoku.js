@@ -1,4 +1,4 @@
-export function cross(a, b) {
+export default function (a, b) {
   var result = [];
   for(var ai in a){
     for(var bi in b){

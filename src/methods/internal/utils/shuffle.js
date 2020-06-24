@@ -1,5 +1,5 @@
 // https://bost.ocks.org/mike/shuffle/
-export function shuffle(array) {
+export default function (array) {
   var m = array.length, t, i;
   while (m) {
     i = Math.floor(Math.random() * m--);

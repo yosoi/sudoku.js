@@ -1,3 +1,3 @@
-export function validate(puzzle) {
+export default function (puzzle) {
 
 };
