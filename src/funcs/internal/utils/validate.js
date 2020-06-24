@@ -1,8 +1,8 @@
 export default function (
   puzzle,
-  blank = ".",
-  markers = "123456789",
-  size = 81
+  blank,
+  markers ,
+  size
 ) {
   if (!puzzle) return "Empty board";
   if (puzzle.length !== 81) {
