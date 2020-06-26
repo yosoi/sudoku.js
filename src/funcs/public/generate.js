@@ -1,3 +1,4 @@
+import assign from '../internal/solver/assign.js'
 import clamp from '../internal/utils/clamp.js'
 import cross from '../internet/utils/cross.js'
 import getCandidatesMap from '../internal/solver/getCandidatesMap.js'
@@ -18,4 +19,8 @@ export function generate(
   const candidates = getCandidatesMap(blank * size);
   const squares = getSquareCoords(markers);
   const shuffledSquares = shuffle(squares);
+  shuffledSquares.forEach((square, index) => {
+    // TODO: Stuff!
+  });
+  return generate(difficulty, blank, markers, size, unique);
 };

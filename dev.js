@@ -1,4 +1,4 @@
-import * as Sudoku from './Sudoku.js'
+import * as SudokuJS from './Sudoku.js'
 
-Sudoku.generate();
-Sudoku.solve();
+SudokuJS.generate();
+SudokuJS.solve();
