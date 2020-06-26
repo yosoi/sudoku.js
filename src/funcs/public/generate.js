@@ -16,11 +16,50 @@ export function generate(
   size = 81,
   unique = true
 ) {
-  const candidates = getCandidatesMap(blank * size);
-  const squares = getSquareCoords(markers);
-  const shuffledSquares = shuffle(squares);
-  shuffledSquares.forEach((square, index) => {
-    // TODO: Stuff!
+  // initialize a blank candidates map like:
+  // {"A1": "123456789", ..., "I9": "123456789"}
+  const candidatesMap = getCandidatesMap(blank * size, markers);
+
+  // guess values until we solve enough squares to satisfy difficulty rating
+  // then, validate and return the puzzle
+  shuffle(getSquareCoords(markers)).forEach((square, index) => {
+
+    // randomly choose one of the available candidates for this square
+    const candidates = candidatesMap[square];
+    const randomCandidate = candidates[randInt(0, candidates.length)];
+
+    // try to assign the randomly chosen candidate to the map
+    if (!assign(candidatesMap, square, randomCandidate)) break;
+
+    // get all squares in map that only have one candidate
+    const solved = Object.entries(candidatesMap)
+      .filter(([square, value]) => value.length === 1)
+      .map(([square, value]) => value);
+
+    // if the difficulty requirements are met
+    if (solved.length >= difficulty && stripDuplicates(solved).length >= 8) {
+
+      // TODO: see if there can ever be extras and adjust accordingly
+      // if you have extras, get rid of them
+      if (solved.length > difficulty) {
+        throw "The resulting puzzle will be too easy.";
+      }
+
+      // create a puzzle from the candidates map like:
+      // "...1..34.532..8.90...etc."
+      let puzzle = Object.entries(candidatesMap)
+        .reduce((b, [square, value]) => {
+          b += value.length === 1 ? value : blank;
+          return b;
+        });
+
+      // return the puzzle if it is solvable
+      if (solve(puzzle)) {
+        return puzzle;
+      }
+    }
   });
+
+  // try again
   return generate(difficulty, blank, markers, size, unique);
 };
